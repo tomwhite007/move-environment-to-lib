@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "injectors-demo",
+  "projects": {
+    "injectors-demo": {
+      "projectType": "application",
+      "root": "apps/injectors-demo",
+      "sourceRoot": "apps/injectors-demo/src",
+      "prefix": "injectors-demo",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/injectors-demo",
+            "index": "apps/injectors-demo/src/index.html",
+            "main": "apps/injectors-demo/src/main.ts",
+            "polyfills": "apps/injectors-demo/src/polyfills.ts",
+            "tsConfig": "apps/injectors-demo/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/injectors-demo/src/favicon.ico",
+              "apps/injectors-demo/src/assets",
+              "apps/injectors-demo/src/config"
+            ],
+            "styles": ["apps/injectors-demo/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/injectors-demo/src/environments/environment.ts",
+                  "with": "apps/injectors-demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "injectors-demo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "injectors-demo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "injectors-demo:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/injectors-demo/src/**/*.ts",
+              "apps/injectors-demo/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/injectors-demo"],
+          "options": {
+            "jestConfig": "apps/injectors-demo/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "injectors-demo-e2e": {
+      "root": "apps/injectors-demo-e2e",
+      "sourceRoot": "apps/injectors-demo-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/injectors-demo-e2e/cypress.json",
+            "tsConfig": "apps/injectors-demo-e2e/tsconfig.e2e.json",
+            "devServerTarget": "injectors-demo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "injectors-demo:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/injectors-demo-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "shared-ui-my-configurable-component": {
+      "projectType": "library",
+      "root": "libs/shared/ui-my-configurable-component",
+      "sourceRoot": "libs/shared/ui-my-configurable-component/src",
+      "prefix": "injectors-demo",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/ui-my-configurable-component/src/**/*.ts",
+              "libs/shared/ui-my-configurable-component/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/ui-my-configurable-component"],
+          "options": {
+            "jestConfig": "libs/shared/ui-my-configurable-component/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "injectors-demo-feature-shell": {
+      "projectType": "library",
+      "root": "libs/injectors-demo/feature-shell",
+      "sourceRoot": "libs/injectors-demo/feature-shell/src",
+      "prefix": "injectors-demo",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/injectors-demo/feature-shell/src/**/*.ts",
+              "libs/injectors-demo/feature-shell/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/injectors-demo/feature-shell"],
+          "options": {
+            "jestConfig": "libs/injectors-demo/feature-shell/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  }
+}

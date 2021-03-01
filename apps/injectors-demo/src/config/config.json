@@ -1,0 +1,4 @@
+{
+  "loadedMessage": "Message from Async Config receieved",
+  "libraryConfig": "This string is to configure my library"
+}
