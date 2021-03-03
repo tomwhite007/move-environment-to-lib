@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { environment } from '../environments/environment';
+import { environment } from '@injectors-demo/injectors-demo/util-environment';
 import { InjectorsDemoFeatureShellModule } from '@injectors-demo/injectors-demo/feature-shell';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ServiceWorkerModule } from '@angular/service-worker';

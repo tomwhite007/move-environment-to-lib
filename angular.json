@@ -59,8 +59,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/injectors-demo/src/environments/environment.ts",
-                  "with": "apps/injectors-demo/src/environments/environment.prod.ts"
+                  "replace": "libs/injectors-demo/util-environment/src/lib/environments/environment.ts",
+                  "with": "libs/injectors-demo/util-environment/src/lib/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -192,6 +192,31 @@
           "outputs": ["coverage/libs/injectors-demo/feature-shell"],
           "options": {
             "jestConfig": "libs/injectors-demo/feature-shell/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "injectors-demo-util-environment": {
+      "projectType": "library",
+      "root": "libs/injectors-demo/util-environment",
+      "sourceRoot": "libs/injectors-demo/util-environment/src",
+      "prefix": "injectors-demo",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/injectors-demo/util-environment/src/**/*.ts",
+              "libs/injectors-demo/util-environment/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/injectors-demo/util-environment"],
+          "options": {
+            "jestConfig": "libs/injectors-demo/util-environment/jest.config.js",
             "passWithNoTests": true
           }
         }

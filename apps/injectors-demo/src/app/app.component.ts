@@ -3,6 +3,7 @@ import {
   Config,
   ConfigService,
 } from '@injectors-demo/injectors-demo/feature-shell';
+import { environment } from '@injectors-demo/injectors-demo/util-environment';
 
 @Component({
   selector: 'injectors-demo-root',
@@ -17,5 +18,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.config = this.configService.getConfig();
+    console.log('environment.production', environment.production);
   }
 }

@@ -20,6 +20,9 @@
       ],
       "@injectors-demo/injectors-demo/feature-shell": [
         "libs/injectors-demo/feature-shell/src/index.ts"
+      ],
+      "@injectors-demo/injectors-demo/util-environment": [
+        "libs/injectors-demo/util-environment/src/index.ts"
       ]
     }
   },

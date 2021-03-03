@@ -26,6 +26,9 @@
     },
     "injectors-demo-feature-shell": {
       "tags": ["scope:injectors-demo", "type:feature"]
+    },
+    "injectors-demo-util-environment": {
+      "tags": ["scope:injectors-demo", "type:util"]
     }
   }
 }
