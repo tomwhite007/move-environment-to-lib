@@ -221,6 +221,31 @@
           }
         }
       }
+    },
+    "shared-data-access-config": {
+      "projectType": "library",
+      "root": "libs/shared/data-access-config",
+      "sourceRoot": "libs/shared/data-access-config/src",
+      "prefix": "injectors-demo",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/data-access-config/src/**/*.ts",
+              "libs/shared/data-access-config/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/data-access-config"],
+          "options": {
+            "jestConfig": "libs/shared/data-access-config/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

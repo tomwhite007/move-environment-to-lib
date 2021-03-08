@@ -29,6 +29,9 @@
     },
     "injectors-demo-util-environment": {
       "tags": ["scope:injectors-demo", "type:util"]
+    },
+    "shared-data-access-config": {
+      "tags": ["scope:shared", "type:data-access"]
     }
   }
 }

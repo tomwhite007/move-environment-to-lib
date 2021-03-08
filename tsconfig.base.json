@@ -23,6 +23,9 @@
       ],
       "@injectors-demo/injectors-demo/util-environment": [
         "libs/injectors-demo/util-environment/src/index.ts"
+      ],
+      "@injectors-demo/shared/data-access-config": [
+        "libs/shared/data-access-config/src/index.ts"
       ]
     }
   },
