@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '@injectors-demo/injectors-demo/util-environment';
+import { ConfigModel } from '@injectors-demo/shared/data-access-config';
 
 export interface Config {
   loadedMessage: string;
@@ -11,7 +13,11 @@ export interface Config {
   providedIn: 'root',
 })
 export class ConfigService {
-  private config!: Config;
+  private config: Config = {
+    loadedMessage: 'Message from Async Config receieved',
+    libraryConfig: 'This string is to configure my library'
+  };
+
 
   constructor(private http: HttpClient) {}
 
@@ -29,10 +35,26 @@ export class ConfigService {
     return this.config;
   }
 
+  getConfigAndEnvironment(): ConfigModel {
+    if (!this.config) {
+      throw new Error('Config not set');
+    }
+    return { ...this.config, ...environment };
+  }
+
   getLibraryConfig() {
     if (!this.config) {
       throw new Error('Config not set');
     }
     return { libraryConfig: this.config.libraryConfig };
+  }
+
+  getInitialState(){
+    return {
+      loadedMessage: 'test',
+      libraryConfig: 'test',
+      production: false,
+      configPath: 'test',
+    };
   }
 }

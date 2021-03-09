@@ -4,7 +4,7 @@ import {
   MyConfigurableComponentComponent,
   SharedUiMyConfigurableComponentModule,
 } from '@injectors-demo/shared/ui-my-configurable-component';
-import { ConfigToken } from './tokens/config.token';
+import { ConfigUiLibToken } from './tokens/config-ui-lib.token';
 import { ConfigPathToken } from './tokens/config-path.token';
 import { ConfigService, Config } from './services/config.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,6 +13,8 @@ import { StoreModule } from '@ngrx/store';
 import { environment } from '@injectors-demo/injectors-demo/util-environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SharedDataAccessConfigModule } from '@injectors-demo/shared/data-access-config';
+import { ConfigStateToken } from './tokens/config-state.token';
 
 const loadAsyncConfigFactory = (
   buildConfigService: ConfigService,
@@ -25,10 +27,15 @@ const returnLibraryConfigFactory = (buildConfigService: ConfigService) => {
   return buildConfigService.getLibraryConfig();
 };
 
+const returnConfigStateFactory = (buildConfigService: ConfigService) => {
+  return buildConfigService.getConfigAndEnvironment();
+};
+
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
+    SharedUiMyConfigurableComponentModule.forRoot(ConfigUiLibToken),
     StoreModule.forRoot(
       {},
       {
@@ -39,7 +46,7 @@ const returnLibraryConfigFactory = (buildConfigService: ConfigService) => {
       }
     ),
     EffectsModule.forRoot([]),
-    SharedUiMyConfigurableComponentModule.forRoot(ConfigToken),
+    SharedDataAccessConfigModule.forRoot(ConfigStateToken),
 
     // Now environment is accessible, imports that require environment.production can now be moved into feature-shell
     !environment.production ? StoreDevtoolsModule.instrument() : [],
@@ -55,8 +62,13 @@ const returnLibraryConfigFactory = (buildConfigService: ConfigService) => {
       multi: true,
     },
     {
-      provide: ConfigToken,
+      provide: ConfigUiLibToken,
       useFactory: returnLibraryConfigFactory,
+      deps: [ConfigService],
+    },
+    {
+      provide: ConfigStateToken,
+      useFactory: returnConfigStateFactory,
       deps: [ConfigService],
     },
   ],
