@@ -6,7 +6,10 @@ import {
 } from '@injectors-demo/shared/ui-my-configurable-component';
 import { ConfigUiLibToken } from './tokens/config-ui-lib.token';
 import { ConfigPathToken } from './tokens/config-path.token';
-import { ConfigService, Config } from './services/config.service';
+import {
+  ConfigService,
+  Config,
+} from '@injectors-demo/shared/data-access-config';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -14,7 +17,6 @@ import { environment } from '@injectors-demo/injectors-demo/util-environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { SharedDataAccessConfigModule } from '@injectors-demo/shared/data-access-config';
-import { ConfigStateToken } from './tokens/config-state.token';
 
 const loadAsyncConfigFactory = (
   buildConfigService: ConfigService,
@@ -26,7 +28,6 @@ const loadAsyncConfigFactory = (
 const returnLibraryConfigFactory = (buildConfigService: ConfigService) => {
   return buildConfigService.getLibraryConfig();
 };
-
 
 @NgModule({
   imports: [
