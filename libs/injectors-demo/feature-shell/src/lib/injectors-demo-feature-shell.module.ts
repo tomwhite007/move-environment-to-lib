@@ -27,9 +27,6 @@ const returnLibraryConfigFactory = (buildConfigService: ConfigService) => {
   return buildConfigService.getLibraryConfig();
 };
 
-const returnConfigStateFactory = (buildConfigService: ConfigService) => {
-  return buildConfigService.getConfigAndEnvironment();
-};
 
 @NgModule({
   imports: [
@@ -46,7 +43,7 @@ const returnConfigStateFactory = (buildConfigService: ConfigService) => {
       }
     ),
     EffectsModule.forRoot([]),
-    SharedDataAccessConfigModule.forRoot(ConfigStateToken),
+    SharedDataAccessConfigModule,
 
     // Now environment is accessible, imports that require environment.production can now be moved into feature-shell
     !environment.production ? StoreDevtoolsModule.instrument() : [],
@@ -64,11 +61,6 @@ const returnConfigStateFactory = (buildConfigService: ConfigService) => {
     {
       provide: ConfigUiLibToken,
       useFactory: returnLibraryConfigFactory,
-      deps: [ConfigService],
-    },
-    {
-      provide: ConfigStateToken,
-      useFactory: returnConfigStateFactory,
       deps: [ConfigService],
     },
   ],

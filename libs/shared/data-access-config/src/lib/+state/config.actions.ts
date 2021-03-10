@@ -1,8 +1,7 @@
-import { createAction } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
+import { ConfigModel } from './config.model';
 
-export const init = createAction('[Config Page] Init');
-
-// export const loadConfigFailure = createAction(
-//   '[Config/API] Load Config Failure',
-//   props<{ error: any }>()
-// );
+export const init = createAction(
+  '[Config] Init',
+  props<{ initialState: ConfigModel }>()
+);

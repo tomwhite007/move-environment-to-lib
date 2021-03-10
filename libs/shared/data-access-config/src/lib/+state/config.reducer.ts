@@ -1,6 +1,7 @@
-import { createReducer, Action } from '@ngrx/store';
+import { createReducer, Action, on } from '@ngrx/store';
 import { ConfigModel } from './config.model';
 
+import * as ConfigActions from './config.actions';
 export const CONFIG_FEATURE_KEY = 'config';
 
 export type State = ConfigModel;
@@ -9,17 +10,14 @@ export interface ConfigPartialState {
   readonly [CONFIG_FEATURE_KEY]: State;
 }
 
-export const initialState: State = {
-  loadedMessage: 'test',
-  libraryConfig: 'test',
-  production: false,
-  configPath: 'test',
-};
-
 const configReducer = createReducer(
-  // undefined
-  initialState
-  // on(ConfigActions.init, (state) => ({ ...state, loaded: false, error: null })),
+  undefined,
+  on(ConfigActions.init, (state, { initialState }) => {
+    if (state) {
+      throw new Error('Config state can only be set once.');
+    }
+    return { ...initialState };
+  })
 );
 
 export function reducer(state: State | undefined, action: Action) {

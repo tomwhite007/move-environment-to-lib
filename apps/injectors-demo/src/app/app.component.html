@@ -2,8 +2,8 @@
   <h1>Welcome to {{ title }}!</h1>
 </header>
 <main>
-  <p>config.json loaded into ConfigService:</p>
-  <pre>{{ config | json }}</pre>
+  <p>config$ from data-access-config ConfigFacade:</p>
+  <pre>{{ config$ | async | json }}</pre>
 
   <injectors-demo-my-configurable-component></injectors-demo-my-configurable-component>
 </main>

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  Config,
-  ConfigService,
-} from '@injectors-demo/injectors-demo/feature-shell';
 import { environment } from '@injectors-demo/injectors-demo/util-environment';
+import {
+  ConfigFacade,
+  ConfigModel,
+} from '@injectors-demo/shared/data-access-config';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'injectors-demo-root',
@@ -12,12 +13,12 @@ import { environment } from '@injectors-demo/injectors-demo/util-environment';
 })
 export class AppComponent implements OnInit {
   title = 'injectors-demo';
-  config: Config;
+  config$: Observable<ConfigModel>;
 
-  constructor(private configService: ConfigService) {}
+  constructor(private configFacade: ConfigFacade) {}
 
   ngOnInit() {
-    this.config = this.configService.getConfig();
+    this.config$ = this.configFacade.config$;
     console.log('environment.production', environment.production);
   }
 }

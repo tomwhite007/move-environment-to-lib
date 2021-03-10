@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@injectors-demo/injectors-demo/util-environment';
-import { ConfigModel } from '@injectors-demo/shared/data-access-config';
+import { ConfigFacade, ConfigModel } from '@injectors-demo/shared/data-access-config';
 
 export interface Config {
   loadedMessage: string;
@@ -19,12 +19,17 @@ export class ConfigService {
   };
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configFacade: ConfigFacade) {}
 
   loadConfig(path: string) {
     return this.http
       .get<Config>(path)
-      .pipe(tap((config) => (this.config = config)))
+      .pipe(
+        tap((config) => {
+          this.config = config;
+          this.configFacade.initState({...config, ...environment})
+        })
+      )
       .toPromise();
   }
 
@@ -35,13 +40,6 @@ export class ConfigService {
     return this.config;
   }
 
-  getConfigAndEnvironment(): ConfigModel {
-    if (!this.config) {
-      throw new Error('Config not set');
-    }
-    return { ...this.config, ...environment };
-  }
-
   getLibraryConfig() {
     if (!this.config) {
       throw new Error('Config not set');
@@ -49,12 +47,4 @@ export class ConfigService {
     return { libraryConfig: this.config.libraryConfig };
   }
 
-  getInitialState(){
-    return {
-      loadedMessage: 'test',
-      libraryConfig: 'test',
-      production: false,
-      configPath: 'test',
-    };
-  }
 }

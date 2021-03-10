@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { ConfigModel } from './config.model';
 import { ConfigPartialState } from './config.reducer';
-@Injectable()
+import * as ConfigSelectors from './config.selectors';
+import * as ConfigActions from './config.actions';
+import { SharedDataAccessConfigModule } from '../shared-data-access-config.module';
+import { filter } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+@Injectable({ providedIn: SharedDataAccessConfigModule })
 export class ConfigFacade {
-  // showPopupToRestartJourney$ = this.store.pipe(
-  //   select(CheckoutPageSelectors.showPopupToRestartCheckoutJourney),
-  //   filter((showPopup) => !!showPopup)
-  // );
+  config$: Observable<ConfigModel> = this.store.pipe(
+    select(ConfigSelectors.getConfigState),
+    filter((state) => !!state)
+  );
 
   constructor(private store: Store<ConfigPartialState>) {}
 
-  // checkoutGuest() {
-  //   this.store.dispatch(CheckoutActions.checkoutGuest());
-  // }
+  initState(initialState: ConfigModel) {
+    this.store.dispatch(ConfigActions.init({ initialState }));
+  }
 }
